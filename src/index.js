@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './store/reducers/burgerBuilder';
+import thunk from 'redux-thunk';
 
 const logger = function (store) {
     return function (next) {
@@ -21,7 +22,7 @@ const logger = function (store) {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(logger)));
+const store = createStore(reducer, composeEnhancers(applyMiddleware(logger, thunk)));
 
 const app = (
     <Provider store={store}>
