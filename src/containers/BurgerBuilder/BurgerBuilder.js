@@ -83,8 +83,8 @@ class BurgerBuilder extends Component {
     let burger = this.props.error ? (
       <p>Ingredient can't be loaded!!</p>
     ) : (
-      <Spinner />
-    );
+        <Spinner />
+      );
     let orderSummary = null;
 
     if (this.props.ingredients) {
@@ -130,9 +130,9 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    price: state.totalPrice,
-    error: state.error
+    ingredients: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error
   };
 };
 
@@ -145,6 +145,7 @@ const mapDispatchToProps = dispatch => {
     onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
