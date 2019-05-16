@@ -16,6 +16,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_ORDERS_START: return fetchOrdersStart(state, action);
         case actionTypes.FETCH_ORDERS_SUCCESS: return fetchOrdersSuccess(state, action);
         case actionTypes.FETCH_ORDERS_FAILED: return fetchOrdersFailed(state, action);
+        case actionTypes.DELETE_ORDER_START: return deleteOrderStart(state, action);
+        case actionTypes.DELETE_ORDER_SUCCESS: return deleteOrderSuccess(state, action);
+        case actionTypes.DELETE_ORDER_FAILED: return deleteOrderFailed(state, action);
         default: return state;
     };
 };
@@ -53,6 +56,18 @@ const fetchOrdersSuccess = (state, action) => {
 }
 
 const fetchOrdersFailed = (state, action) => {
+    return updateObject(state, { loading: false });
+}
+
+const deleteOrderStart = (state, action) => {
+    return updateObject(state, { loading: true });
+}
+
+const deleteOrderSuccess = (state, action) => {
+    return updateObject(state, { loading: false });
+}
+
+const deleteOrderFailed = (state, action) => {
     return updateObject(state, { loading: false });
 }
 
