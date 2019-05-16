@@ -7,10 +7,11 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (authData) => {
+export const authSuccess = (userId, idToken) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        authData: authData
+        userId: userId,
+        idToken: idToken
     };
 };
 
@@ -37,11 +38,11 @@ export const auth = (email, password, isSignUp) => {
             authData)
             .then(response => {
                 console.log(response);
-                dispatch(authSuccess(response.data));
+                dispatch(authSuccess(response.data.localId, response.data.idToken));
             })
-            .catch(error => {
-                console.log(error);
-                dispatch(authFailed(error));
+            .catch(err => {
+                console.log(err);
+                dispatch(authFailed(err.response.data.error));
             });
     }
 }
