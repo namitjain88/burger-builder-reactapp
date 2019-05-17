@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios.orders';
+import * as appConfig from '../../app.config';
 
 export const authStart = () => {
     return {
@@ -44,9 +45,9 @@ export const auth = (email, password, isSignUp) => {
             password: password,
             returnSecureToken: true
         };
-        let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyB8SUhK1nKev0hNRNvuQqajrJUortHzG9s';
+        let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + appConfig.FIREBASE_API_KEY;
         if (isSignUp) {
-            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyB8SUhK1nKev0hNRNvuQqajrJUortHzG9s';
+            url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + appConfig.FIREBASE_API_KEY;
         }
         axios.post(url,
             authData)
