@@ -7,9 +7,11 @@ const navigationItems = props => (
     <NavigationItem link="/" exact>
       Burger Builder
     </NavigationItem>
-    <NavigationItem link="/orders">Orders</NavigationItem>
     {props.authenticated
-      ? <NavigationItem link="/logout">Logout</NavigationItem>
+      ? (<React.Fragment>
+        <NavigationItem link="/orders">Orders</NavigationItem>
+        <NavigationItem link="/logout">Logout</NavigationItem>
+      </React.Fragment>)
       : <NavigationItem link="/auth">Authenticate</NavigationItem>
     }
   </ul>
