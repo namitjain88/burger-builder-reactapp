@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.css';
@@ -16,7 +17,7 @@ class Auth extends Component {
                     type: 'email',
                     placeholder: 'Email'
                 },
-                value: '',
+                value: 'test@test.com',
                 validation: {
                     isRequired: true,
                     isEmail: true
@@ -30,7 +31,7 @@ class Auth extends Component {
                     type: 'password',
                     placeholder: 'Password'
                 },
-                value: '',
+                value: 'testtest',
                 validation: {
                     isRequired: true,
                     minLength: 7
@@ -87,7 +88,7 @@ class Auth extends Component {
     }
 
     submitHandler = (event) => {
-        event.preventDefault()
+        event.preventDefault();
         this.props.onAuth(this.state.controls.email.value,
             this.state.controls.password.value,
             this.state.isSignup);
@@ -95,6 +96,12 @@ class Auth extends Component {
 
     switchAuthHandler = () => {
         this.setState({ isSignup: !this.state.isSignup });
+    }
+
+    componentDidMount() {
+        if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
+            this.props.onSetAuthRedirectPath();
+        }
     }
 
     render() {
@@ -118,10 +125,12 @@ class Auth extends Component {
         });
 
         const errorMessage = this.props.error ? this.props.error.message : null;
+        let authRedirect = this.props.isAuthenticated ? <Redirect to={this.props.authRedirectPath} /> : null;
 
         return (
             this.props.loading ? <Spinner /> :
                 <div className={classes.Auth}>
+                    {authRedirect}
                     {errorMessage}
                     <form onSubmit={this.submitHandler}>
                         {form}
@@ -140,13 +149,17 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+        buildingBurger: state.burgerBuilder.buildingBurger,
+        authRedirectPath: state.auth.authRedirectPath
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     };
 }
 

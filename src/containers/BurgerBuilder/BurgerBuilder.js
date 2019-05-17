@@ -19,38 +19,6 @@ class BurgerBuilder extends Component {
     this.props.onInitIngredients();
   }
 
-  /*  addIngredientHandler = type => {
-     const oldCount = this.state.ingredients[type];
-     const updatedCount = oldCount + 1;
-     const updatedIngredients = {
-       ...this.state.ingredients
-     };
-     updatedIngredients[type] = updatedCount;
-     const priceAddition = INGREDIENT_PRICES[type];
-     const oldPrice = this.state.totalPrice;
-     const newPrice = oldPrice + priceAddition;
-     this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-     this.updatePurchasableStateHandler(updatedIngredients);
-   }; */
-
-  /* removeIngredientHandler = type => {
-    const oldCount = this.state.ingredients[type];
-    if (oldCount <= 0) {
-      return;
-    }
-    const updatedCount = oldCount - 1;
-    const updatedIngredients = { ...this.state.ingredients };
-    updatedIngredients[type] = updatedCount;
-    const priceDeduction = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice - priceDeduction;
-    this.setState({
-      ingredients: updatedIngredients,
-      totalPrice: newPrice
-    });
-    this.updatePurchasableStateHandler(updatedIngredients);
-  }; */
-
   updatePurchasableStateHandler = ingredients => {
     const sum = Object.keys(ingredients)
       .map(ingKey => {
@@ -66,6 +34,7 @@ class BurgerBuilder extends Component {
     if (this.props.isAuthenticated) {
       this.setState({ purchasing: true });
     } else {
+      this.props.onSetAuthRedirectPath('/checkout');
       this.props.history.push('/auth');
     }
   };
@@ -150,7 +119,8 @@ const mapDispatchToProps = dispatch => {
     onRemoveIngredient: ingredientName =>
       dispatch(actions.removeIngredient(ingredientName)),
     onInitIngredients: () => dispatch(actions.initIngredients()),
-    onPurchaseInit: () => dispatch(actions.purchaseInit())
+    onPurchaseInit: () => dispatch(actions.purchaseInit()),
+    onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
   };
 };
 
