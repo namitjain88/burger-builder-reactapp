@@ -5,10 +5,7 @@ import classes from './CheckoutSummary.css';
 
 const checkOutSummary = (props) => {
     return (
-
         < div className={classes.CheckoutSummary} >
-            {console.log('CheckoutSummary rendering with following props')}
-            {console.log(props.ingredients)}
             <h2>We hope it tastes well!!</h2>
             <div style={{
                 width: '100%',
