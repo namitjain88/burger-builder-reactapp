@@ -10,7 +10,8 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 
-class BurgerBuilder extends Component {
+/* export keyword added to make it availabe as named export in it's test file w/o connect */
+export class BurgerBuilder extends Component {
   state = {
     purchasing: false
   };
